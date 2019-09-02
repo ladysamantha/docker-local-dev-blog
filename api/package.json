@@ -3,6 +3,9 @@
   "version": "0.1.0-alpha1",
   "homepage": "https://github.com/ladysamantha/docker-local-dev-blog#readme",
   "repository": "github:ladysamantha/docker-local-dev-blog",
+  "devDependencies": {
+    "nodemon": "~1.19.1"
+  },
   "dependencies": {
     "express": "~4.17.1"
   }

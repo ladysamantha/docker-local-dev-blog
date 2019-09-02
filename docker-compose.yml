@@ -3,7 +3,19 @@ services:
   api:
     image: sammiio/invoices-api
     build: ./api
+    entrypoint: [ npx ]
+    command:
+    - nodemon
+    - index.js
     environment:
       PORT: '3000'
     ports:
     - '3000:3000'
+    volumes:
+    # use a bind-mount to get src
+    # into the container
+    - ./api:/app
+    # create a data volume so
+    # we can get node_modules into our
+    # bind-mounted container
+    - /app/node_modules
