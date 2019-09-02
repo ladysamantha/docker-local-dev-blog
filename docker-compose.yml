@@ -19,3 +19,14 @@ services:
     # we can get node_modules into our
     # bind-mounted container
     - /app/node_modules
+  worker:
+    image: sammiio/invoices-worker
+    build: ./worker
+    # volumes:
+    # - ./worker:/app
+    depends_on:
+    - nats
+  nats:
+    image: nats:latest
+    ports:
+    - '8222'
