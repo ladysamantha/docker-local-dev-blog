@@ -9,6 +9,8 @@ services:
     - index.js
     environment:
       PORT: '3000'
+      NATS_HOST: nats
+      REDIS_HOST: redis
     ports:
     - '3000:3000'
     volumes:
@@ -19,6 +21,9 @@ services:
     # we can get node_modules into our
     # bind-mounted container
     - /app/node_modules
+    depends_on:
+    - nats
+    - redis
   worker:
     image: sammiio/invoices-worker
     build:
@@ -32,6 +37,8 @@ services:
     depends_on:
     - nats
   nats:
-    image: nats:latest
+    image: nats:2.0.4-linux
     ports:
     - '8222'
+  redis:
+    image: redis:5.0.5-alpine
