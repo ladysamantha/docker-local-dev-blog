@@ -1,0 +1,9 @@
+{
+  "name": "@sammiio/invoices-api",
+  "version": "0.1.0-alpha1",
+  "homepage": "https://github.com/ladysamantha/docker-local-dev-blog#readme",
+  "repository": "github:ladysamantha/docker-local-dev-blog",
+  "dependencies": {
+    "express": "~4.17.1"
+  }
+}
