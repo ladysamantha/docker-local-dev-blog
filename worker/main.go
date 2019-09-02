@@ -16,7 +16,9 @@ type invoice struct {
 }
 
 func main() {
-	nc, err := nats.Connect("nats", nats.Name("Invoices Worker"))
+	log.Println("starting worker...")
+	natsHost := os.Getenv("NATS_HOST")
+	nc, err := nats.Connect(natsHost, nats.Name("Invoices Worker"))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -31,7 +33,12 @@ func main() {
 	log.Println("connected to nats!")
 	ec.Subscribe("invoices.requested", func(inv *invoice) {
 		log.Printf("received invoice approval request for invoice %d\n", inv.ID)
-		time.Sleep(1 * time.Second)
+		time.Sleep(2 * time.Second)
+		if inv.Amount > 500.00 {
+			log.Printf("rejecting invoice! id=%d amount=%f\n", inv.ID, inv.Amount)
+			ec.Publish("invoices.rejected", inv)
+			return
+		}
 		ec.Publish("invoices.approved", inv)
 	})
 

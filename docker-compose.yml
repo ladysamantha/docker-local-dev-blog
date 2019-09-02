@@ -21,9 +21,14 @@ services:
     - /app/node_modules
   worker:
     image: sammiio/invoices-worker
-    build: ./worker
-    # volumes:
-    # - ./worker:/app
+    build:
+      context: ./worker
+      target: dev
+    entrypoint: [ godev ]
+    environment:
+      NATS_HOST: nats
+    volumes:
+    - ./worker:/app
     depends_on:
     - nats
   nats:
